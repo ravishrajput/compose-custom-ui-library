@@ -4,11 +4,11 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,11 +19,10 @@ import com.ravish.compose.customuilibrary.theme.ThemeColor
 @Composable
 fun Button(
     onClick: () -> Unit,
-    modifier: Modifier = Modifier.padding(5.dp),
-    enabled: Boolean = true,
     text: String,
+    enabled: Boolean = true,
+    modifier: Modifier = Modifier.padding(5.dp),
     style: Style = DEFAULT,
-    colors: ButtonColors? = null,
     image: ImageVector? = null
 ) {
     MaterialTheme {
@@ -33,17 +32,17 @@ fun Button(
                     backgroundColor = ThemeColor,
                     contentColor = Color.White
                 )
-                RenderButton(onClick, modifier, enabled, colors, color, image, text)
+                RenderButton(onClick, modifier, enabled, color, image, text)
             }
             TEXT -> {
                 val color = ButtonDefaults.buttonColors(
                     backgroundColor = Transparent,
                     contentColor = ThemeColor
                 )
-                RenderButton(onClick, modifier, enabled, colors, color, image, text)
+                RenderButton(onClick, modifier, enabled, color, image, text)
             }
             OUTLINED -> {
-                OutlinedButton(onClick, image, text)
+                OutlinedButton(onClick, image, text, enabled, modifier)
             }
         }
     }
@@ -53,12 +52,15 @@ fun Button(
 private fun OutlinedButton(
     onClick: () -> Unit,
     image: ImageVector?,
-    text: String
+    text: String,
+    enabled: Boolean,
+    modifier: Modifier = Modifier.padding(5.dp)
 ) {
     OutlinedButton(
         onClick = onClick,
-        shape = CircleShape,
-        border = BorderStroke(1.dp, ThemeColor),
+        modifier = modifier,
+        enabled = enabled,
+        border = BorderStroke(1.dp, if (enabled) ThemeColor else Gray),
         colors = ButtonDefaults.outlinedButtonColors(
             backgroundColor = Transparent,
             contentColor = ThemeColor
@@ -81,12 +83,11 @@ private fun RenderButton(
     onClick: () -> Unit,
     modifier: Modifier,
     enabled: Boolean,
-    colors: ButtonColors?,
     color: ButtonColors,
     image: ImageVector?,
     text: String
 ) {
-    Button(onClick = onClick, modifier, enabled, colors = colors ?: color) {
+    Button(onClick = onClick, modifier, enabled, colors = color) {
         image?.let {
             Icon(
                 it,
@@ -116,5 +117,5 @@ enum class Style {
 @Composable
 @Preview
 private fun ButtonPreview() {
-    Button({}, text = "Submit", style = DEFAULT)
+    Button({}, text = "Submit", style = TEXT, enabled = false)
 }
