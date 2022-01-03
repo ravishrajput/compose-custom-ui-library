@@ -35,11 +35,7 @@ fun Button(
                 RenderButton(onClick, modifier, enabled, color, image, text)
             }
             TEXT -> {
-                val color = ButtonDefaults.buttonColors(
-                    backgroundColor = Transparent,
-                    contentColor = ThemeColor
-                )
-                RenderButton(onClick, modifier, enabled, color, image, text)
+                TextButton(onClick, modifier, enabled, image, text)
             }
             OUTLINED -> {
                 OutlinedButton(onClick, image, text, enabled, modifier)
@@ -97,6 +93,27 @@ private fun RenderButton(
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
         }
         Text(text)
+    }
+}
+
+@Composable
+private fun TextButton(
+    onClick: () -> Unit,
+    modifier: Modifier,
+    enabled: Boolean,
+    image: ImageVector?,
+    text: String
+) {
+    TextButton(onClick = onClick, modifier = modifier, enabled = enabled) {
+        image?.let {
+            Icon(
+                it,
+                contentDescription = "Vector Image",
+                modifier = Modifier.size(ButtonDefaults.IconSize)
+            )
+            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+        }
+        if (enabled) Text(text, color = ThemeColor) else Text(text)
     }
 }
 

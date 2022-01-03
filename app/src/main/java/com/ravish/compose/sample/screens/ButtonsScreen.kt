@@ -1,23 +1,22 @@
 package com.ravish.compose.sample.screens
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.ravish.compose.customuilibrary.Button
 import com.ravish.compose.customuilibrary.Style
+import com.ravish.compose.customuilibrary.theme.ThemeColor
 
 @Composable
 fun ButtonScreen() {
     Column(modifier = Modifier.fillMaxSize()) {
-        Text(text = "DEFAULT")
+        Text(text = "DEFAULT", Modifier.padding(top = 20.dp))
         Row {
             Button(onClick = {}, text = "Submit")
             Button(onClick = {}, text = "Submit", enabled = false)
@@ -27,7 +26,7 @@ fun ButtonScreen() {
             Button(onClick = {}, text = "Favourite", enabled = false, image = Icons.Filled.Favorite)
         }
 
-        Text(text = "TEXT")
+        Text(text = "TEXT", Modifier.padding(top = 20.dp))
         Row {
             Button(onClick = {}, text = "Text Button", style = Style.TEXT)
             Button(onClick = {}, text = "Text Button", enabled = false, style = Style.TEXT)
@@ -48,7 +47,7 @@ fun ButtonScreen() {
             )
         }
 
-        Text(text = "OUTLINED")
+        Text(text = "OUTLINED", Modifier.padding(top = 20.dp))
         Row {
             Button(onClick = {}, text = "Cancel", style = Style.OUTLINED)
             Button(onClick = {}, text = "Cancel", enabled = false, style = Style.OUTLINED)
