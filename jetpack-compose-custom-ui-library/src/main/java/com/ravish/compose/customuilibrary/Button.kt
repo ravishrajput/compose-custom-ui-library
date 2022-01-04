@@ -7,14 +7,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Gray
-import androidx.compose.ui.graphics.Color.Companion.Transparent
+import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ravish.compose.customuilibrary.Style.*
-import com.ravish.compose.customuilibrary.theme.ThemeColor
 
 @Composable
 fun Button(
@@ -28,11 +25,7 @@ fun Button(
     MaterialTheme {
         when (style) {
             DEFAULT -> {
-                val color = ButtonDefaults.buttonColors(
-                    backgroundColor = ThemeColor,
-                    contentColor = Color.White
-                )
-                RenderButton(onClick, modifier, enabled, color, image, text)
+                RenderButton(onClick, modifier, enabled, image, text)
             }
             TEXT -> {
                 TextButton(onClick, modifier, enabled, image, text)
@@ -56,11 +49,7 @@ private fun OutlinedButton(
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
-        border = BorderStroke(1.dp, if (enabled) ThemeColor else Gray),
-        colors = ButtonDefaults.outlinedButtonColors(
-            backgroundColor = Transparent,
-            contentColor = ThemeColor
-        )
+        border = BorderStroke(1.dp, if (enabled) MaterialTheme.colors.primary else LightGray),
     ) {
         image?.let {
             Icon(
@@ -79,11 +68,10 @@ private fun RenderButton(
     onClick: () -> Unit,
     modifier: Modifier,
     enabled: Boolean,
-    color: ButtonColors,
     image: ImageVector?,
     text: String
 ) {
-    Button(onClick = onClick, modifier, enabled, colors = color) {
+    Button(onClick = onClick, modifier, enabled) {
         image?.let {
             Icon(
                 it,
@@ -113,7 +101,7 @@ private fun TextButton(
             )
             Spacer(Modifier.size(ButtonDefaults.IconSpacing))
         }
-        if (enabled) Text(text, color = ThemeColor) else Text(text)
+        Text(text)
     }
 }
 
