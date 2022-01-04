@@ -10,18 +10,29 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ravish.compose.customuilibrary.Button
+import com.ravish.compose.customuilibrary.theme.ComposeCustomUILibraryTheme
 
 @Composable
 fun LandingScreen(navController: NavController) {
-    Surface(color = MaterialTheme.colors.background) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            Row {
-                Button(onClick = {
-                    navController.navigate("buttons_screen")
-                }, text = "Buttons", modifier = Modifier.padding(5.dp).fillMaxWidth(0.5f))
-                Button(onClick = {
-                    navController.navigate("app_top_bar_screen")
-                }, text = "App Top Bar", modifier = Modifier.padding(5.dp).fillMaxWidth(1f))
+    ComposeCustomUILibraryTheme {
+        Surface(color = MaterialTheme.colors.background) {
+            Column(modifier = Modifier.fillMaxSize()) {
+                Row {
+                    Button(
+                        onClick = {
+                            navController.navigate("buttons_screen")
+                        }, text = "Buttons", modifier = Modifier
+                            .padding(5.dp)
+                            .fillMaxWidth(0.5f)
+                    )
+                    Button(
+                        onClick = {
+                            navController.navigate("app_top_bar_screen")
+                        }, text = "App Top Bar", modifier = Modifier
+                            .padding(5.dp)
+                            .fillMaxWidth(1f)
+                    )
+                }
             }
         }
     }
