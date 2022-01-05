@@ -3,6 +3,7 @@ package com.ravish.compose.sample.screens
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -21,12 +22,16 @@ fun ListItemViewScreen() {
         Surface(color = MaterialTheme.colors.background) {
             Column(modifier = Modifier.fillMaxSize()) {
                 Text(text = "List Item View: ", Modifier.padding(20.dp))
-                ListItemView(
-                    painterResource(id = R.drawable.jetpack_compose),
-                    "Title",
-                    "SubTitle",
-                    "This is Dummy description text..."
-                )
+                LazyColumn {
+                    items(20) { i ->
+                        ListItemView(
+                            painterResource(id = R.drawable.jetpack_compose),
+                            "Title $i",
+                            "SubTitle",
+                            "This is Dummy description text..."
+                        )
+                    }
+                }
             }
         }
     }
