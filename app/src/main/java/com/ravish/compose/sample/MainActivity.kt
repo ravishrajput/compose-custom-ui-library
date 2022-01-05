@@ -8,9 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ravish.compose.customuilibrary.theme.ComposeCustomUILibraryTheme
-import com.ravish.compose.sample.screens.AppTopBarScreen
-import com.ravish.compose.sample.screens.ButtonScreen
-import com.ravish.compose.sample.screens.LandingScreen
+import com.ravish.compose.sample.screens.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +36,12 @@ private fun ComposeNavigation() {
         }
         composable("app_top_bar_screen") {
             AppTopBarScreen()
+        }
+        composable("dialog_screen") {
+            DialogScreen()
+        }
+        composable("list_item_view_screen") {
+            ListItemViewScreen()
         }
     }
 }

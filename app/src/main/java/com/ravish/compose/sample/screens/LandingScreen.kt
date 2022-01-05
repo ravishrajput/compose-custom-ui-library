@@ -33,6 +33,23 @@ fun LandingScreen(navController: NavController) {
                             .fillMaxWidth(1f)
                     )
                 }
+
+                Row {
+                    Button(
+                        onClick = {
+                            navController.navigate("dialog_screen")
+                        }, text = "Dialog", modifier = Modifier
+                            .padding(5.dp)
+                            .fillMaxWidth(0.5f)
+                    )
+                    Button(
+                        onClick = {
+                            navController.navigate("list_item_view_screen")
+                        }, text = "List Item View", modifier = Modifier
+                            .padding(5.dp)
+                            .fillMaxWidth(1f)
+                    )
+                }
             }
         }
     }
