@@ -1,6 +1,20 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'maven-publish'
+}
+
+task androidSourcesJar(type: Jar) {
+    archiveClassifier.set('sources')
+    if (project.plugins.findPlugin("com.android.library")) {
+        from android.sourceSets.main.java.srcDirs
+    } else {
+        from sourceSets.main.java.srcDirs
+    }
+}
+
+artifacts {
+    archives androidSourcesJar
 }
 
 android {
@@ -61,4 +75,50 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+}
+
+project.afterEvaluate {
+    publishToMavenLocal {
+        publishing {
+            publications {
+                release(MavenPublication) {
+                    groupId LIBRARY_GROUP
+                    artifactId LIBRARY_ARTIFACT_ID
+                    version LIBRARY_VERSION_NAME
+
+                    if (project.plugins.findPlugin("com.android.library")) {
+                        from components.release
+                    } else {
+                        artifact("$buildDir/libs/${project.getName()}-${version}.jar")
+                    }
+
+                    artifact androidSourcesJar
+                }
+            }
+            publications.all {
+                pom.withXml {
+                    asNode().dependencies.'*'
+                            .findAll() {
+                                it.scope.text() == 'runtime' &&
+                                        project.configurations.implementation.allDependencies.find {
+                                            dep -> dep.name == it.artifactId.text()
+                                        }
+                            }.each { it.scope*.value = 'compile' }
+                }
+            }
+        }
+
+        doLast {
+            def prettyPrint = {
+                1.upto(100, { print "=" })
+                println()
+            }
+            println()
+            prettyPrint()
+            println "PUBLICATION FINISHED"
+            println "Artifact RELEASE: " + LIBRARY_GROUP + ":" + LIBRARY_ARTIFACT_ID + ":" + LIBRARY_VERSION_NAME
+            println "Artifact DEBUG: " + LIBRARY_GROUP + ":" + LIBRARY_ARTIFACT_ID + ":" + LIBRARY_VERSION_NAME
+            prettyPrint()
+        }
+    }
 }
